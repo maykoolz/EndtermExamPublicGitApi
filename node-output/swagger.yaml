@@ -1,0 +1,845 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Patient API",
+    "description" : "A Patient API",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/maykoolz/EndTermExam/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : {
+    "/patients" : {
+      "get" : {
+        "summary" : "Get all patients",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Patient name",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "John%20Doe"
+          }
+        }, {
+          "name" : "birthdate",
+          "in" : "query",
+          "description" : "Patient birthdate",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "1999-01-01"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Patient"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a patient",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatientPartial"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        }
+      }
+    },
+    "/patients/{pat_id}" : {
+      "get" : {
+        "summary" : "Get a patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        } ],
+        "responses" : {
+          "205" : {
+            "description" : "Reset Content"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Update a patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatientPartial"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/patients/{pat_id}/prescriptions" : {
+      "get" : {
+        "summary" : "Get all prescriptions of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "diagnosis",
+          "in" : "query",
+          "description" : "The diagnosis",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "pneumonia"
+          }
+        }, {
+          "name" : "prescriber",
+          "in" : "query",
+          "description" : "The prescriber",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "A Artesano"
+          }
+        }, {
+          "name" : "date",
+          "in" : "query",
+          "description" : "The date",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-10-13-9-30-AM"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Prescription"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a prescription for a patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PrescriptionPartial"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/patients/{pat_id}/prescriptions/{pre_id}" : {
+      "get" : {
+        "summary" : "Get the prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        } ],
+        "responses" : {
+          "205" : {
+            "description" : "Reset Content"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Update the prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PrescriptionPartial"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/patients/{pat_id}/prescriptions/{pre_id}/medications" : {
+      "get" : {
+        "summary" : "Get all the medications on the prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "The name of the medicine",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "Vancomycin"
+          }
+        }, {
+          "name" : "strength",
+          "in" : "query",
+          "description" : "The strength of the medicine",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "Vancomycin"
+          }
+        }, {
+          "name" : "frequency",
+          "in" : "query",
+          "description" : "The intake frequency",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "Vancomycin"
+          }
+        }, {
+          "name" : "total",
+          "in" : "query",
+          "description" : "The total number of medicine",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "Vancomycin"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Medication"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a new medication on the prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Medication"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Medication"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/patients/{pat_id}/prescriptions/{pre_id}/medications/{med_id}" : {
+      "get" : {
+        "summary" : "Get the medication of a prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        }, {
+          "name" : "med_id",
+          "in" : "path",
+          "description" : "Medication ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "11111"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Medication"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete the medication of a prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        }, {
+          "name" : "med_id",
+          "in" : "path",
+          "description" : "Medication ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "11111"
+          }
+        } ],
+        "responses" : {
+          "205" : {
+            "description" : "Reset Content"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "patch" : {
+        "summary" : "Update the medication of a prescription of the patient",
+        "parameters" : [ {
+          "name" : "pat_id",
+          "in" : "path",
+          "description" : "Patient ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "12345"
+          }
+        }, {
+          "name" : "pre_id",
+          "in" : "path",
+          "description" : "Prescription ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "55555"
+          }
+        }, {
+          "name" : "med_id",
+          "in" : "path",
+          "description" : "Medication ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "11111"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Medication"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Medication"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Medication" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "11111"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Vancomycin"
+          },
+          "stength" : {
+            "type" : "string",
+            "example" : "1500 mg"
+          },
+          "frequency" : {
+            "type" : "string",
+            "example" : "6 hrs"
+          },
+          "total" : {
+            "type" : "string",
+            "example" : "15 tabs"
+          }
+        }
+      },
+      "Prescription" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "55555"
+          },
+          "diagnosis" : {
+            "type" : "string",
+            "example" : "pneumonia"
+          },
+          "medication" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Medication"
+            }
+          },
+          "prescriber" : {
+            "type" : "string",
+            "example" : "A Artesano"
+          },
+          "date" : {
+            "type" : "string",
+            "example" : "2021-10-13-9-30-AM"
+          }
+        }
+      },
+      "PrescriptionPartial" : {
+        "type" : "object",
+        "properties" : {
+          "diagnosis" : {
+            "type" : "string",
+            "example" : "pneumonia"
+          },
+          "prescriber" : {
+            "type" : "string",
+            "example" : "A Artesano"
+          },
+          "date" : {
+            "type" : "string",
+            "example" : "2021-10-13-9-30-AM"
+          }
+        }
+      },
+      "Patient" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "number",
+            "example" : 12345
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "John Doe"
+          },
+          "birthdate" : {
+            "type" : "string",
+            "example" : "1999-01-01"
+          },
+          "prescriptions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Prescription"
+            }
+          }
+        }
+      },
+      "PatientPartial" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "John Doe"
+          },
+          "birthdate" : {
+            "type" : "string",
+            "example" : "1999-01-01"
+          }
+        }
+      }
+    }
+  }
+}
